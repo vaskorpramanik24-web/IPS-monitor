@@ -8,7 +8,7 @@ const firebaseConfig = {
   projectId: "ips-monitor",
   storageBucket: "ips-monitor.firebasestorage.app",
   messagingSenderId: "382668565531",
-  appId: "1:382668565531:web:8feecc2f50d381171bdcbe"
+  appId: "1:382668565531:web:8feecc2f50d381171bdcbe",
   measurementId: "G-YVZDZKJRLF"
 };
 
