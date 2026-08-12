@@ -2,15 +2,15 @@
   "rules": {
     "live": {
       ".read": true,
-      ".write": "auth.uid === 'DEVICE_UID_HERE'"
+      ".write": "auth.uid === '8UYg9q6X3gM76DXr9UAeigeIiCl1'"
     },
     "history": {
       ".read": true,
-      ".write": "auth.uid === 'DEVICE_UID_HERE'"
+      ".write": "auth.uid === '8UYg9q6X3gM76DXr9UAeigeIiCl1'"
     },
     "loadshed": {
       ".read": true,
-      ".write": "auth.uid === 'DEVICE_UID_HERE'"
+      ".write": "auth.uid === '8UYg9q6X3gM76DXr9UAeigeIiCl1'"
     },
     "control": {
       ".read": true,
