@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPS Battery Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <h1>IPS battery monitor</h1>
+        <p class="sub">Live cell voltage, charge state, load protection</p>
+      </div>
+    </div>
+    <div class="conn" id="connState">
+      <span class="dot" id="connDot"></span>
+      <span id="connText">Connecting…</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-cell">
+      <svg viewBox="0 0 220 120" class="cell-svg" id="cellSvg" role="img" aria-label="Battery charge level">
+        <rect x="8" y="8" width="190" height="104" rx="10" class="cell-shell"/>
+        <rect x="198" y="42" width="14" height="36" rx="3" class="cell-nub"/>
+        <g id="cellSegments"></g>
+      </svg>
+      <div class="hero-readout">
+        <span class="pct-num" id="pctNum">--</span><span class="pct-sign">%</span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-label">Voltage</span>
+        <span class="stat-value mono" id="voltVal">-- V</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Charging relay</span>
+        <span class="stat-value" id="chargeState">--</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Load cutoff</span>
+        <span class="stat-value" id="cutoffState">--</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Last update</span>
+        <span class="stat-value mono small" id="lastUpdate">--</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="panel control-panel">
+      <div class="panel-head">
+        <h2>Charging control</h2>
+        <span class="tag" id="overrideTag">Auto</span>
+      </div>
+      <p class="panel-note">Auto lets the firmware manage charging by voltage threshold. Manual takes direct control of the relay.</p>
+      <div class="btn-row">
+        <button class="btn" id="btnAuto" data-cmd="-1">Auto</button>
+        <button class="btn btn-on" id="btnOn" data-cmd="1">Force ON</button>
+        <button class="btn btn-off" id="btnOff" data-cmd="0">Force OFF</button>
+      </div>
+    </div>
+
+    <div class="panel control-panel">
+      <div class="panel-head">
+        <h2>Load cutoff</h2>
+        <span class="tag tag-muted">Always automatic</span>
+      </div>
+      <p class="panel-note">Cutoff protects the battery regardless of charging mode and can't be manually overridden from here — by design.</p>
+      <div class="thresholds">
+        <div><span class="thr-label">Trips below</span><span class="thr-val mono">11.50 V</span></div>
+        <div><span class="thr-label">Reconnects above</span><span class="thr-val mono">12.10 V</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel history-panel">
+    <div class="panel-head">
+      <h2>Voltage history</h2>
+      <div class="range-select" id="rangeSelect">
+        <button class="range-btn active" data-hours="6">6h</button>
+        <button class="range-btn" data-hours="24">24h</button>
+        <button class="range-btn" data-hours="168">7d</button>
+      </div>
+    </div>
+    <canvas id="historyChart" height="90"></canvas>
+  </section>
+
+  <section class="panel loadshed-panel">
+    <div class="panel-head">
+      <h2>Load shedding</h2>
+      <div class="range-select" id="lsRangeSelect">
+        <button class="range-btn active" data-range="today">Today</button>
+        <button class="range-btn" data-range="3">3d</button>
+        <button class="range-btn" data-range="7">7d</button>
+        <button class="range-btn" data-range="30">30d</button>
+      </div>
+    </div>
+    <div class="ls-summary">
+      <span class="ls-total-label" id="lsTotalLabel">Total today</span>
+      <span class="ls-total-val mono" id="lsTotalVal">-- h -- m</span>
+    </div>
+    <canvas id="loadshedChart" height="100"></canvas>
+    <p class="ls-empty" id="lsEmpty" hidden>No outages recorded for this range.</p>
+  </section>
+
+  <footer class="footer">
+    <span>Data via Firebase Realtime Database</span>
+  </footer>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="assets/firebase-config.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

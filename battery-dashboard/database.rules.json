@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "live": {
+      ".read": true,
+      ".write": "auth.uid === 'DEVICE_UID_HERE'"
+    },
+    "history": {
+      ".read": true,
+      ".write": "auth.uid === 'DEVICE_UID_HERE'"
+    },
+    "loadshed": {
+      ".read": true,
+      ".write": "auth.uid === 'DEVICE_UID_HERE'"
+    },
+    "control": {
+      ".read": true,
+      ".write": "auth != null"
+    }
+  }
+}
